@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
-export class HerokuDBConfigService implements TypeOrmOptionsFactory {
+export class DatabaseConfigService implements TypeOrmOptionsFactory {
   private isProduction: boolean;
 
   constructor(private configService: ConfigService){
@@ -16,11 +16,11 @@ export class HerokuDBConfigService implements TypeOrmOptionsFactory {
     return {
       name: 'Heroku',
       type: "postgres",
-      host: this.configService.get<string>('HEROKU_DB_HOST'),
-      username: this.configService.get<string>('HEROKU_DB_USERNAME'),
-      password: `${this.configService.get<string>('HEROKU_DB_PASSWORD')}`,
-      port: this.configService.get<number>('HEROKU_DB_PORT'),
-      database: this.configService.get<string>('HEROKU_DB_DATABASE'),
+      host: this.configService.get<string>('DB_HOST'),
+      username: this.configService.get<string>('DB_USERNAME'),
+      password: `${this.configService.get<string>('DB_PASSWORD')}`,
+      port: this.configService.get<number>('DB_PORT'),
+      database: this.configService.get<string>('DB_DATABASE'),
       ssl: this.isProduction,
       extra: {
         ssl: this.isProduction ? { rejectUnauthorized: false }: null,
@@ -35,5 +35,5 @@ export class HerokuDBConfigService implements TypeOrmOptionsFactory {
       synchronize: true,
     };
   }
-
 }
+
