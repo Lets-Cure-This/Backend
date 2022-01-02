@@ -13,7 +13,7 @@ import { databaseValidationSchema } from './config/config.schema';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`.env.stage.${process.env.STAGE}`,],
+      envFilePath: [`.env.stage.${process.env.STAGE}`, `.env`],
       validationSchema: databaseValidationSchema,
     }),
     TypeOrmModule.forRootAsync({

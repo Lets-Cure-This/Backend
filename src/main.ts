@@ -16,8 +16,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
 
   app.useGlobalInterceptors(new TransformInterceptor());
-  await app.listen(process.env.nestPort || 3000);
 
-  Logger.log(`Application listening on port ${process.env.nestPort}`);
+  // env.PORT is needed for heroku
+  // else use the local ports defined in .env
+  await app.listen(process.env.PORT || process.env.localPort || 3000);
+
+  Logger.log(`Application listening on port ${process.env.PORT || process.env.localPort || 3000}`);
 }
 bootstrap();
