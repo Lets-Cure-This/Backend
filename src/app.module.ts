@@ -12,6 +12,7 @@ import { HerokuDBConfigService } from './config/heroku-db.config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [`env/env.stage.${process.env.STAGE}`, 'env/.env'],
     }),
     // TypeOrmModule.forRootAsync({
     //   useClass: DefaultDBConfigService,
