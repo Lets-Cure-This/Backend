@@ -1,32 +1,29 @@
 // NestJS
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 // Data logic
 import { DiseasesModule } from './data/diseases/diseases.module';
 // Database Connection
 // import { DefaultDBConfigService } from './config/default-db.config';
-import { DatabaseConfigService } from './config/database.config';
+import { PgDatabaseConfigService } from './config/pg.database.config';
 import { databaseValidationSchema } from './config/config.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`env/env.stage.${process.env.STAGE}`, 'env/.env'],
-      validationSchema: databaseValidationSchema
+      envFilePath: [`.env.stage.${process.env.STAGE}`,],
+      validationSchema: databaseValidationSchema,
     }),
-    // TypeOrmModule.forRootAsync({
-    //   useClass: DefaultDBConfigService,
-    //   inject: [DefaultDBConfigService,],
-    // }),
     TypeOrmModule.forRootAsync({
-      useClass: DatabaseConfigService,
-      inject: [DatabaseConfigService,],
+      imports: [ConfigModule],
+      useClass: PgDatabaseConfigService,
+      inject: [PgDatabaseConfigService, ConfigService,],
     }),
     DiseasesModule
   ],
   controllers: [],
-  providers: [DatabaseConfigService],
+  providers: [PgDatabaseConfigService],
 })
 export class AppModule {}
