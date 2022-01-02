@@ -13,12 +13,15 @@ export class HerokuDBConfigService implements TypeOrmOptionsFactory {
 
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
+    console.log("HEROKU DB UNAME: ", this.configService.get<string>('HEROKU_DB_USERNAME'))
+    console.log("DEV DB UNAME: ", this.configService.get<string>('DEV_DB_USERNAME'))
+
     return {
       name: 'Heroku',
       type: "postgres",
       host: this.configService.get<string>('HEROKU_DB_HOST'),
       username: this.configService.get<string>('HEROKU_DB_USERNAME'),
-      password: this.configService.get<string>('HEROKU_DB_PASSWORD'),
+      password: `${this.configService.get<string>('HEROKU_DB_PASSWORD')}`,
       port: this.configService.get<number>('HEROKU_DB_PORT'),
       database: this.configService.get<string>('HEROKU_DB_DATABASE'),
       ssl: this.isProduction,
