@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from "@nestjs/config";
 // Data logic
-import { DiseasesModule } from './data/diseases/diseases.module';
+import { DiseasesModule } from './components/diseases/diseases.module';
 // Database Connection
 // import { DefaultDBConfigService } from './config/default-db.config';
 import { PgDatabaseConfigService } from './config/pg.database.config';
